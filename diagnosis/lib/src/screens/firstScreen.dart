@@ -14,7 +14,8 @@ class FirstScreen extends StatefulWidget {
 
 class FirstScreenState extends State<FirstScreen>
     with SingleTickerProviderStateMixin {
-  static const List<String> expertiseTypes = ["Beginner", "Medium", "Expert"];
+  List<String> answerList = [];
+  int idx = -1;
 
   @override
   void initState() {
@@ -24,6 +25,9 @@ class FirstScreenState extends State<FirstScreen>
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
+    String howAreYouStr = 'howAreYou'.tr;
+
+    List<String> questionList = howAreYouStr.split(' ');
 
     return Scaffold(
       body: Container(
@@ -44,7 +48,7 @@ class FirstScreenState extends State<FirstScreen>
             ),
             const SizedBox(height: 20),
             Text(
-              'howAreYou'.tr,
+              howAreYouStr,
               style: const TextStyle(
                 fontSize: 14.0,
                 fontFamily: 'NunitoSans',
@@ -62,6 +66,7 @@ class FirstScreenState extends State<FirstScreen>
                 color: Colors.black,
               ),
             ),
+            answerSuggestion(),
             Center(
               child: ElevatedButton(
                 onPressed: () {
@@ -88,6 +93,52 @@ class FirstScreenState extends State<FirstScreen>
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget answerSuggestion() {
+    List<String> suggestionList = [
+      "Hello",
+      "Hai",
+      "How",
+      "You",
+      "are",
+      "is",
+      "an",
+      "who"
+    ];
+
+    return Container(
+      height: ((suggestionList.length / 3) * 80),
+      child: GridView.count(
+        crossAxisCount: 3,
+        crossAxisSpacing: 10.0,
+        mainAxisSpacing: 10.0,
+        childAspectRatio: 3,
+        physics: const NeverScrollableScrollPhysics(),
+        children: suggestionList
+            .map(
+              (suggestStr) => GestureDetector(
+                onTap: () {},
+                child: ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.white,
+                  ),
+                  child: Text(
+                    suggestStr,
+                    style: const TextStyle(
+                      fontSize: 14.0,
+                      fontFamily: 'NunitoSans-Bold',
+                      fontWeight: FontWeight.w700,
+                      color: lightIndigoColor,
+                    ),
+                  ),
+                ),
+              ),
+            )
+            .toList(),
       ),
     );
   }
